@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>订单列表</title>
+</head>
+<body>
+
+<h1>订单列表</h1>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+        <th>订单ID</th>
+        <th>商品名称</th>
+        <th>购买数量</th>
+        <th>订单总价</th>
+        <th>下单时间</th>
+    </tr>
+
+    {% for order in orders %}
+    <tr>
+        <td>{{ order[0] }}</td>
+        <td>{{ order[1] }}</td>
+        <td>{{ order[2] }}</td>
+        <td>¥{{ order[3] }}</td>
+        <td>{{ order[4] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="/">返回首页</a>
+
+</body>
+</html>

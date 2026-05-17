@@ -1,0 +1,34 @@
+INFO     test_api:test_api.py:170 请求: POST http://127.0.0.1:5000/add_product | headers={'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'} | body={'name': 'case20_block_order', 'price': '5', 'stock': '1'}
+INFO     test_api:test_api.py:181 响应: status=201 | body={"id": 104, "name": "case20_block_order", "price": 5.0, "stock": 1}
+INFO     test_api:test_api.py:170 请求: POST http://127.0.0.1:5000/order/104 | headers={'Content-Type': 'application/x-www-form-urlencoded'} | body={'quantity': '2'}
+INFO     test_api:test_api.py:181 响应: status=200 | body=库存不足！
+INFO     test_api:test_api.py:170 请求: GET http://127.0.0.1:5000/ | headers={'Content-Type': 'application/json'} | body=(无)
+INFO     test_api:test_api.py:181 响应: status=200 | body=<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>电商系统</title>
+</head>
+<body>
+<h1>商品列表</h1>
+
+<a href="/add_product">新增商品</a> |
+<a href="/orders">查看订单</a>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+        <th>ID</th>
+        <th>商品名称</th>
+        <th>价格</th>
+        <th>库存</th>
+        <th>操作</th>
+    </tr>
+
+    
+    <tr>
+        <td>1</td>
+        <td>case03_product_ok</td>
+        <td>¥9.9</td>
+        <td>0</td>
+        <td><a href="/order/1">下单</a></td>
+ ...

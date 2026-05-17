@@ -1,0 +1,1047 @@
+{
+  "dependencies": [],
+  "cases": [
+    {
+      "id": "1",
+      "name": "商品列表页-正常展示",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_get",
+          "request": {
+            "method": "GET",
+            "path": "/",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "2",
+      "name": "新增商品表单页-正常打开",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_get",
+          "request": {
+            "method": "GET",
+            "path": "/add_product",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "3",
+      "name": "新增商品-合法参数成功",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case03_product_ok",
+              "price": "9.9",
+              "stock": "10"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        }
+      ],
+      "assert": {
+        "status": 201,
+        "checks": []
+      }
+    },
+    {
+      "id": "4",
+      "name": "新增商品-缺少商品名称",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {},
+            "body": {
+              "price": "1",
+              "stock": "1"
+            }
+          },
+          "assert": {
+            "status": 500,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 500,
+        "checks": []
+      }
+    },
+    {
+      "id": "5",
+      "name": "新增商品-价格为负数",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case05_neg_price",
+              "price": "-1",
+              "stock": "5"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 201,
+        "checks": []
+      }
+    },
+    {
+      "id": "6",
+      "name": "新增商品-库存为0",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case06_zero_stock",
+              "price": "1",
+              "stock": "0"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 201,
+        "checks": []
+      }
+    },
+    {
+      "id": "7",
+      "name": "新增商品-库存为负数",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case07_neg_stock",
+              "price": "1",
+              "stock": "-3"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 201,
+        "checks": []
+      }
+    },
+    {
+      "id": "8",
+      "name": "下单页-存在商品可打开",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case08_order_page",
+              "price": "5",
+              "stock": "10"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_get",
+          "request": {
+            "method": "GET",
+            "path": "/order/{product_id}",
+            "headers": {},
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            }
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "9",
+      "name": "下单页-商品不存在",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_get",
+          "request": {
+            "method": "GET",
+            "path": "/order/999999",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "10",
+      "name": "用户下单-库存充足成功",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case10_order_ok",
+              "price": "8",
+              "stock": "10"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "1"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 302,
+        "checks": []
+      }
+    },
+    {
+      "id": "11",
+      "name": "用户下单-购买数量为1",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case11_qty_one",
+              "price": "3",
+              "stock": "5"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "1"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 302,
+        "checks": []
+      }
+    },
+    {
+      "id": "12",
+      "name": "用户下单-购买数量为0",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case12_qty_zero",
+              "price": "2",
+              "stock": "5"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "0"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 302,
+        "checks": []
+      }
+    },
+    {
+      "id": "13",
+      "name": "用户下单-购买数量为负数（当前未校验，记录缺陷）",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case13_qty_neg",
+              "price": "2",
+              "stock": "5"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "-1"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 302,
+        "checks": []
+      }
+    },
+    {
+      "id": "14",
+      "name": "用户下单-库存不足",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case14_low_stock",
+              "price": "5",
+              "stock": "1"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "99"
+            }
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "15",
+      "name": "用户下单-商品不存在",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/999999",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {},
+            "body": {
+              "quantity": "1"
+            }
+          },
+          "assert": {
+            "status": 500,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 500,
+        "checks": []
+      }
+    },
+    {
+      "id": "16",
+      "name": "订单列表-正常查询",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_get",
+          "request": {
+            "method": "GET",
+            "path": "/orders",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "17",
+      "name": "电商主流程-建品到查单",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case17_flow_main",
+              "price": "10",
+              "stock": "5"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_get",
+          "request": {
+            "method": "GET",
+            "path": "/",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_03_get",
+          "request": {
+            "method": "GET",
+            "path": "/order/{product_id}",
+            "headers": {},
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            }
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_04_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "2"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_05_get",
+          "request": {
+            "method": "GET",
+            "path": "/orders",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "18",
+      "name": "库存扣减-下单前后一致性",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case18_stock_check",
+              "price": "4",
+              "stock": "5"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_get",
+          "request": {
+            "method": "GET",
+            "path": "/order/{product_id}",
+            "headers": {},
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            }
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_03_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "3"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_04_get",
+          "request": {
+            "method": "GET",
+            "path": "/",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_05_get",
+          "request": {
+            "method": "GET",
+            "path": "/orders",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "19",
+      "name": "连续两次下单-累计扣减库存",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case19_double_order",
+              "price": "6",
+              "stock": "5"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "1"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_03_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "1"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_04_get",
+          "request": {
+            "method": "GET",
+            "path": "/orders",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "20",
+      "name": "库存不足阻断-低库存商品超额下单",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case20_block_order",
+              "price": "5",
+              "stock": "1"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "2"
+            }
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_03_get",
+          "request": {
+            "method": "GET",
+            "path": "/",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 200,
+        "checks": []
+      }
+    },
+    {
+      "id": "21",
+      "name": "浏览商品列表后进入下单页",
+      "enabled": true,
+      "steps": [
+        {
+          "name": "step_01_post",
+          "request": {
+            "method": "POST",
+            "path": "/add_product",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Accept": "application/json"
+            },
+            "path_params": {},
+            "body": {
+              "name": "case21_browse_order",
+              "price": "7",
+              "stock": "3"
+            }
+          },
+          "assert": {
+            "status": 201,
+            "checks": []
+          },
+          "extract": {
+            "id": "$.id"
+          }
+        },
+        {
+          "name": "step_02_get",
+          "request": {
+            "method": "GET",
+            "path": "/",
+            "headers": {},
+            "path_params": {}
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_03_get",
+          "request": {
+            "method": "GET",
+            "path": "/order/{product_id}",
+            "headers": {},
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            }
+          },
+          "assert": {
+            "status": 200,
+            "checks": []
+          }
+        },
+        {
+          "name": "step_04_post",
+          "request": {
+            "method": "POST",
+            "path": "/order/{product_id}",
+            "headers": {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "path_params": {
+              "product_id": "STEP:step_01_post.id"
+            },
+            "body": {
+              "quantity": "1"
+            }
+          },
+          "assert": {
+            "status": 302,
+            "checks": []
+          }
+        }
+      ],
+      "assert": {
+        "status": 302,
+        "checks": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+INFO     test_api:test_api.py:170 请求: GET http://127.0.0.1:5000/orders | headers={'Content-Type': 'application/json'} | body=(无)
+INFO     test_api:test_api.py:181 响应: status=200 | body=<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>订单列表</title>
+</head>
+<body>
+
+<h1>订单列表</h1>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+        <th>订单ID</th>
+        <th>商品名称</th>
+        <th>购买数量</th>
+        <th>订单总价</th>
+        <th>下单时间</th>
+    </tr>
+
+    
+    <tr>
+        <td>40</td>
+        <td>case13_qty_neg</td>
+        <td>-1</td>
+        <td>¥-2.0</td>
+        <td>2026-05-17 14:03:43</td>
+    </tr>
+    
+    <tr>
+        <td>39</td>
+        <td>case...
