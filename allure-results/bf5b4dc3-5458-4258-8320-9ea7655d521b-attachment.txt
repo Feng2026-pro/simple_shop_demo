@@ -1,8 +1,0 @@
-INFO     test_api:test_api.py:170 请求: POST http://127.0.0.1:5000/add_product | headers={'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'} | body={'name': 'case12_qty_zero', 'price': '2', 'stock': '5'}
-INFO     test_api:test_api.py:181 响应: status=201 | body={"id": 98, "name": "case12_qty_zero", "price": 2.0, "stock": 5}
-INFO     test_api:test_api.py:170 请求: POST http://127.0.0.1:5000/order/98 | headers={'Content-Type': 'application/x-www-form-urlencoded'} | body={'quantity': '0'}
-INFO     test_api:test_api.py:181 响应: status=302 | body=<!doctype html>
-<html lang=en>
-<title>Redirecting...</title>
-<h1>Redirecting...</h1>
-<p>You should be redirected automatically to the target URL: <a href="/orders">/orders</a>. If not, click the link.
